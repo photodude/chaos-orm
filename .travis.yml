@@ -9,6 +9,10 @@ php:
   - nightly
   - hhvm
 
+env:
+  global:
+    secure: vRC7fXWzkH3hrH6GfgND342gzcJp54LT4SVXnoXdO5u96x54rH80y2xYg06gTTS3OjosC+OpSFeq0k+QYtpUo9wmlrs3ItWG+gx+hKegNyV/qzUsHusZCUsD8eqlwvSfmVJmLXUm6oJfzMejbj+X5988Ye/KTk1bB3JqrNuMcLyuPg1DMSXccAz8U3HN2RyMiZtNA7utQhpmLI/VAIg0KZOBnJAvmx5+XZXj7gXVk7jr4fFx6nThR1FeeNE4b7Hjvh1+/KbjlZWL4fqC/I3F3mTSkUgftpDpqNsi+66IOGsgx2dvmNdQ1fmlLBC+dNNKLWtL467chU3npg3Cj5A8sT+rgR1YK4FT/LCWHkYm0pcx8NDkCnK+QhsIaiK4sFoJ7PLC72kK6ruV8CS7gNlgieaFWRqLFMrl2RHP/VOzpoCfmuPZzVKIxVWJMgvsbJgYgAX6BNuMhydEJLGdJx5NXJgcQ6Nj2YJCVBe63dEAwPoraouHj2CuEw1x1xLdl77mBVvF2Ya1sKrDREqjXn2ED6gnCzGppOVWVeaVKyJprf+ERIZ2350FxtqQgB4DfPUR7dwG0iR1DhXZC84vSsBBklWwIZuvou370KyKv/cuTYJZ03rtEJx27wFeIZvJ+++7H51Pf75SonBgEauW1QhE5bqasZMl9/SLM1GKtTcSF7E=
+    - GITHUB_COMPOSER_AUTH=[secure]
 matrix:
   fast_finish: true
   allow_failures:
@@ -29,7 +33,3 @@ script: bin/kahlan --coverage=3 --clover=clover.xml
 after_success:
   - "if [ $(phpenv version-name) = '5.6' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
   - "if [ $(phpenv version-name) = '5.6' ]; then php ocular.phar code-coverage:upload --format=php-clover 'clover.xml'; fi"
-
-env:
-  global:
-    secure: vRC7fXWzkH3hrH6GfgND342gzcJp54LT4SVXnoXdO5u96x54rH80y2xYg06gTTS3OjosC+OpSFeq0k+QYtpUo9wmlrs3ItWG+gx+hKegNyV/qzUsHusZCUsD8eqlwvSfmVJmLXUm6oJfzMejbj+X5988Ye/KTk1bB3JqrNuMcLyuPg1DMSXccAz8U3HN2RyMiZtNA7utQhpmLI/VAIg0KZOBnJAvmx5+XZXj7gXVk7jr4fFx6nThR1FeeNE4b7Hjvh1+/KbjlZWL4fqC/I3F3mTSkUgftpDpqNsi+66IOGsgx2dvmNdQ1fmlLBC+dNNKLWtL467chU3npg3Cj5A8sT+rgR1YK4FT/LCWHkYm0pcx8NDkCnK+QhsIaiK4sFoJ7PLC72kK6ruV8CS7gNlgieaFWRqLFMrl2RHP/VOzpoCfmuPZzVKIxVWJMgvsbJgYgAX6BNuMhydEJLGdJx5NXJgcQ6Nj2YJCVBe63dEAwPoraouHj2CuEw1x1xLdl77mBVvF2Ya1sKrDREqjXn2ED6gnCzGppOVWVeaVKyJprf+ERIZ2350FxtqQgB4DfPUR7dwG0iR1DhXZC84vSsBBklWwIZuvou370KyKv/cuTYJZ03rtEJx27wFeIZvJ+++7H51Pf75SonBgEauW1QhE5bqasZMl9/SLM1GKtTcSF7E=
