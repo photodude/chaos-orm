@@ -1,4 +1,4 @@
-sudo: required
+sudo: false
 dist: trusty
 group: edge
 language: php
@@ -6,16 +6,23 @@ language: php
 php:
   - 7.0
   - 7.1
-  #- hhvm
+  - nightly
+  - hhvm
 
 matrix:
   fast_finish: true
+  allow_failures:
+    - php: nightly
+    - php: hhvm
 
 before_script:
+  - if [[ $TRAVIS_PHP_VERSION == hhvm* ]]; then echo 'xdebug.enable = On' >> /etc/hhvm/php.ini; fi
+  - if [[ $TRAVIS_PHP_VERSION == hhvm* ]]; then echo 'hhvm.php7.all = 1' >> /etc/hhvm/php.ini; fi
+  # Disable JIT compilation in hhvm, as the JIT is useless for short live scripts like tests.
+  - if [[ $TRAVIS_PHP_VERSION = hhvm* ]]; then echo 'hhvm.jit = 0' >> /etc/hhvm/php.ini; fi
   - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH
   - composer install
-  - if [[ $TRAVIS_PHP_VERSION =~ ^hhvm ]]; then echo 'xdebug.enable = On' >> /etc/hhvm/php.ini; fi
-  - if [[ $TRAVIS_PHP_VERSION =~ ^hhvm ]]; then echo 'hhvm.php7.all = 1' >> /etc/hhvm/php.ini; fi
+
 
 script: bin/kahlan --coverage=3 --clover=clover.xml
 
